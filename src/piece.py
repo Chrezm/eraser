@@ -20,6 +20,7 @@ _TILE_ID = {
 
 class Piece():
     def __init__(self, colors):
+        self.name = ''
         self.colors = [_TILE_ID[i][0].lower() for i in colors]
         self.table = [[" ", " ", " ", " "],
                      [" ", " ", " ", " "]]
