@@ -1,19 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri May 17 13:09:52 2019
 
-@author: ACER
-"""
-
-def io_main():
-    while True:
-        try:
-            seed = int(input('Seed: '))
-            n = int(input('Number of pieces: ' ))
-            print("\n PIECES \n")
-            print(get_pieces(seed, n))
-        except ValueError:
-            break
+from src import seed_inspect
+from src import condition_search
 
 # I piece. Has orange. To the right of orange, there cannot be yellow nor red
 condition1 = lambda piece: (
@@ -51,7 +39,8 @@ condition1 = lambda piece: (
     and piece.colors_right_cant('o', 'r')
 )
 
+conditions = [condition1, condition2, condition3, condition4]
+
 if __name__ == '__main__':
-    #io_main()
-    frame, seed, pieces = search([condition1, condition2, condition3, condition4])
-    pass
+    seed_inspect.io_main()
+    #condition_search.io_main(conditions)

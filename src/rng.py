@@ -1,4 +1,4 @@
-import piece
+from src import piece
 
 def lower_half(hex_number):
     return (hex_number % 16**4)

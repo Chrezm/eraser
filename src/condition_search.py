@@ -1,9 +1,9 @@
-import rng
+from src import rng
 
-def search(conditions):
-    seed = 0
-    i = 0
-    while True:
+_LOOP_POINT = 32768
+
+def search(conditions, i=0, seed=0):
+    while i < _LOOP_POINT:
         if i % 1000 == 0:
             print(i)
         i += 1
@@ -16,13 +16,9 @@ def search(conditions):
                 break
         else:
             pieces = rng.get_pieces(seed, n=4)
-            print(i, hex(seed), pieces)
-            if input("Continue searching? [y/n]: ") == "y":
-                continue
-            return i, hex(seed), pieces
+            return i, seed, pieces
 
-        if i == 32768:
-            raise ValueError('Reached loop point.')
+    raise ValueError('Reached loop point.')
 
 def all_combos():
     d = dict()
@@ -44,3 +40,24 @@ def all_combos():
             raise ValueError(i)
 
     return d
+
+def main(conditions):
+    i, seed, pieces = search(conditions, i=0, seed=0)
+    return i, hex(seed), pieces
+
+def io_main(conditions):
+    i = 0
+    seed = 0
+    while True:
+        try:
+            i, seed, pieces = search(conditions, i=i, seed=seed)
+            print(i, hex(seed), pieces)
+            user_response = ''
+            while user_response not in ['y', 'n']:
+                user_response = input("Continue searching? [y/n]: ")
+                if user_response == "y":
+                    break
+                if user_response == 'n':
+                    return
+        except ValueError:
+            return
